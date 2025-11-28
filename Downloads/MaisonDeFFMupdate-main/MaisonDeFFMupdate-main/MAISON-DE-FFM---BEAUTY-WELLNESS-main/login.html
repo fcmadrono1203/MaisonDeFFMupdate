@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Maison De FFM</title>
+    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="login-body">
+
+    <!-- Full Screen Login -->
+    <div class="login-container">
+
+        <!-- LEFT SIDE -->
+        <div class="login-left">
+            <img src="assets/logo/FFM.png" alt="Logo" class="login-logo">
+            <h1>MAISON DE FFM</h1>
+            <p>Premium Home Beauty & Wellness</p>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="login-right">
+            <div class="login-box">
+                <h2>Welcome Back!</h2>
+                <p class="subtitle">Log in to access your account</p>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <input type="email" placeholder="Email Address" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit" class="login-submit">LOG IN</button>
+                </form>
+
+                <p class="signup">
+                    Don't have an account? <a href="signup.html">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+
+            const email = e.target[0].value;
+            const password = e.target[1].value;
+
+            // Demo credentials
+            if (email === "client@maisonffm.com" && password === "123456") {
+                localStorage.setItem("isLoggedIn", "true");
+
+                // Redirect to an existing page
+                window.location.href = "home.html";
+            } else {
+                alert("Incorrect email or password.\nTry: client@maisonffm.com / 123456");
+            }
+        }
+
+        // Auto redirect if logged in already
+        if (localStorage.getItem("isLoggedIn") === "true") {
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Session | Maison De FFM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="assets/logo/FFM.png" alt="Maison De FFM Logo">
+            <div class="nav-title">MAISON DE FFM</div>
+        </div>
+        <div class="nav-center">
+            <a href="home.html">HOME</a>
+            <a href="about.html">ABOUT US</a>
+            <a href="services.html">SERVICES</a>
+            <a href="promos.html">PROMOS</a>
+            <a href="contact.html">CONTACT US</a>
+        </div>
+        <a href="booking.html" class="book-btn">BOOK NOW!</a>
+    </nav>
+
+    <div class="booking-hero">
+        <h1>BOOK YOUR SESSION!</h1>
+        <p>Elegance delivered to your doorstep</p>
+    </div>
+
+    <div class="booking-container">
+
+        <!-- FORM -->
+        <form onsubmit="goToPayment(event)">
+
+            <div class="form-group"><label>FULL NAME</label><input type="text" name="Full Name" required placeholder="Your full name"></div>
+            <div class="form-group"><label>PHONE NUMBER</label><input type="tel" name="Phone" required placeholder="+63"></div>
+            <div class="form-group"><label>EMAIL</label><input type="email" name="Email" required placeholder="you@domain.com"></div>
+
+            <div class="form-group">
+                <label>PREFERRED DATE</label>
+                <input type="date" name="Date" required>
+            </div>
+
+            <div class="form-group">
+                <label>TIME SLOT</label>
+                <select name="Time Slot" required>
+                    <option value="" disabled selected>Select your preferred time</option>
+                    <option>10:00 am</option>
+                    <option>11:00 am</option>
+                    <option>12:00 pm</option>
+                    <option>1:00 pm</option>
+                    <option>2:00 pm</option>
+                    <option>3:00 pm</option>
+                    <option>4:00 pm</option>
+                    <option>5:00 pm</option>
+                    <option>6:00 pm</option>
+                </select>
+            </div>
+
+            <!-- SERVICES -->
+            <div class="form-group">
+                <label>SERVICE & DURATION</label>
+                <select name="Service" required>
+                    <option value="" disabled selected>Choose your service</option>
+
+                    <optgroup label="MASSAGE">
+                        <option value="500">Ventosa Massage (1 Hour) — ₱500</option>
+                        <option value="400">Swedish Massage (1 Hour) — ₱400</option>
+                        <option value="400">Traditional Hilot (1 Hour) — ₱400</option>
+                        <option value="300">Half Body Massage (1 Hour) — ₱300</option>
+                        <option value="250">Foot Massage (1 Hour) — ₱250</option>
+                        <option value="250">Back Massage (30 mins) — ₱250</option>
+                        <option value="250">Facial Massage (30 mins) — ₱250</option>
+                    </optgroup>
+
+                    <optgroup label="NAILS">
+                        <option value="1500">Regular Manicure — ₱1,500</option>
+                        <option value="3500">Manicure with Nail Extensions — ₱3,500</option>
+                        <option value="1000">Manicure (18 & below) — ₱1,000</option>
+                        <option value="1500">Regular Pedicure — ₱1,500</option>
+                        <option value="1000">Pedicure (18 & below) — ₱1,000</option>
+                    </optgroup>
+
+                    <optgroup label="WAXING">
+                        <option value="2000">Eyebrows & Mouth — ₱2,000</option>
+                        <option value="2500">Arms — ₱2,500</option>
+                        <option value="3500">Legs — ₱3,500</option>
+                        <option value="2613">Full Face — ₱2,613</option>
+                        <option value="8000">Full Body + Massage — ₱8,000</option>
+                    </optgroup>
+
+                    <optgroup label="THREADING">
+                        <option value="3000">Eyebrows — ₱3,000</option>
+                        <option value="1500">Chin — ₱1,500</option>
+                        <option value="2000">Neck — ₱2,000</option>
+                        <option value="1500">Upper Lip — ₱1,500</option>
+                        <option value="2000">Side Burns — ₱2,000</option>
+                        <option value="2678">Forehead — ₱2,678</option>
+                        <option value="6000">Full Face Threading — ₱6,000</option>
+                    </optgroup>
+                </select>
+            </div>
+
+
+
+            <!-- BEAUTICIAN (Moved Inside Form ✔ FIXED) -->
+            <div class="form-group">
+                <label>SELECT BEAUTICIAN</label>
+                <select name="Beautician" required>
+                    <option value="" disabled selected>Choose your beautician</option>
+
+                    <optgroup label="Massage Specialists">
+                        <option value="Anna — Massage Specialist">Anna — Massage Specialist</option>
+                        <option value="Marie — Massage Therapist">Marie — Massage Therapist</option>
+                        <option value="Jessa — Hilot Expert">Jessa — Hilot Expert</option>
+                    </optgroup>
+
+                    <optgroup label="Nail Technicians">
+                        <option value="Clara — Nail Artist">Clara — Nail Artist</option>
+                        <option value="Sophia — Nail Technician">Sophia — Nail Technician</option>
+                    </optgroup>
+
+                    <optgroup label="Waxing & Threading Experts">
+                        <option value="Rica — Waxing Specialist">Rica — Waxing Specialist</option>
+                        <option value="Ella — Threading Specialist">Ella — Threading Specialist</option>
+                    </optgroup>
+                </select>
+            </div>
+
+                        <!-- ADDRESS -->
+            <div class="form-group full">
+                <label>FULL ADDRESS (Home Service)</label>
+                <input type="text" name="Address" required placeholder="House #, Street, Barangay, City, Landmark">
+            </div>
+
+            <!-- NOTES -->
+            <div class="form-group full">
+                <label>SPECIAL REQUESTS OR NOTES</label>
+                <textarea rows="4" name="Special Requests" placeholder="Allergies • Preferred pressure • Scent • etc."></textarea>
+            </div>
+
+            <!-- SUBMIT -->
+            <button type="submit" class="submit-btn">SECURE MY APPOINTMENT</button>
+        </form>
+
+        <p style="text-align:center; margin-top: 30px; font-size:14px; opacity:0.8; letter-spacing:2px;">
+            Home Service Fee: ₱200 will be added automatically
+        </p>
+    </div>
+
+<!-- SCRIPT -->
+<script>
+// Replace the goToPayment function in booking.html
+function goToPayment(event) {
+    event.preventDefault();
+
+    const form = document.querySelector("form");
+
+    const data = {
+        customerName: form.querySelector('input[name="Full Name"]').value,
+        phone: form.querySelector('input[name="Phone"]').value,
+        email: form.querySelector('input[name="Email"]').value,
+        date: form.querySelector('input[name="Date"]').value,
+        time: form.querySelector('select[name="Time Slot"]').value,
+        service: form.querySelector('select[name="Service"]').value,
+        beautician: form.querySelector('select[name="Beautician"]').value,
+        address: form.querySelector('input[name="Address"]').value,
+        specialRequests: form.querySelector('textarea[name="Special Requests"]').value
+    };
+
+    // Send data to backend
+    fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Booking failed');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Store booking ID for summary page
+        localStorage.setItem("bookingId", data.booking.id);
+        window.location.href = "booking_summary.html";
+    })
+    .catch(error => {
+        alert('Booking failed: ' + error.message);
+        console.error('Error:', error);
+    });
+}
+</script>
+
+</body>
+</html>

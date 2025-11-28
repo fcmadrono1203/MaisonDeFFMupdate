@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Successful | Maison De FFM</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================== GLOBAL RESET =========================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Playfair Display", serif;
+        }
+
+        body {
+            background-image: url("assets/background/welcome.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* =========================== RECEIPT BOX =========================== */
+        .receipt-box {
+            background: rgba(0, 0, 0, 0.286);
+            backdrop-filter: blur(10px);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(255, 220, 90, 0.4);
+            max-width: 450px;
+        }
+
+        .receipt-box h1 {
+            font-size: 40px;
+            color: #ffdc5a;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 220, 90, 0.8);
+        }
+
+        .receipt-box p {
+            font-size: 20px;
+            color: white;
+            opacity: 0.9;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        /* =========================== BUTTON =========================== */
+        .home-btn {
+            padding: 14px 45px;
+            background: transparent;
+            border: 2px solid #ffdc5a;
+            color: #ffdc5a;
+            font-size: 18px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 6px 25px rgba(255, 220, 90, 0.3);
+        }
+
+        .home-btn:hover {
+            background: rgba(255, 220, 90, 0.3);
+            border-color: white;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(255, 220, 90, 0.5);
+        }
+
+        /* =========================== SMALL BOOKING SUMMARY =========================== */
+        .summary-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 220, 90, 0.35);
+            box-shadow: 0 3px 15px rgba(255, 220, 90, 0.25);
+            text-align: left;
+        }
+
+        .summary-box h2 {
+            font-size: 20px;
+            color: #ffdc5a;
+            margin-bottom: 12px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .summary-item .label {
+            font-size: 15px;
+            color: #ffd6e8;
+            opacity: 0.9;
+        }
+
+        .summary-item .value {
+            font-size: 15px;
+            color: white;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="receipt-box">
+    <h1>Booking Confirmed!</h1>
+    <p>Your appointment has been successfully booked.</p>
+
+    <div class="summary-box">
+    <h2>Booking Summary</h2>
+
+    <div class="summary-item">
+        <span class="label">Service:</span>
+        <span class="value" id="summary-service"></span>
+    </div>
+
+    <div class="summary-item">
+        <span class="label">Date:</span>
+        <span class="value" id="summary-date"></span>
+    </div>
+
+    <div class="summary-item">
+        <span class="label">Time:</span>
+        <span class="value" id="summary-time"></span>
+    </div>
+
+    <div class="summary-item">
+        <span class="label">Client Address:</span>
+        <span class="value" id="summary-address"></span>
+    </div>
+
+    <!-- ⭐ NEW: BEAUTICIAN SUMMARY -->
+    <div class="summary-item">
+        <span class="label">Beautician:</span>
+        <span class="value" id="summary-beautician"></span>
+    </div>
+</div>
+
+
+    <a href="home.html">
+        <button class="home-btn">HOME PAGE</button>
+    </a>
+</div>
+
+<script>
+    
+    // Replace the script in booking_summary.html
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingId = localStorage.getItem("bookingId");
+    
+    if (bookingId) {
+        fetch(`/api/bookings/${bookingId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const booking = data.booking;
+                    document.getElementById("summary-service").textContent = booking.serviceName || "—";
+                    document.getElementById("summary-date").textContent = new Date(booking.date).toLocaleDateString() || "—";
+                    document.getElementById("summary-time").textContent = booking.time || "—";
+                    document.getElementById("summary-address").textContent = booking.address || "—";
+                    document.getElementById("summary-beautician").textContent = booking.beauticianName || "—";
+                } else {
+                    document.querySelector('.receipt-box h1').textContent = 'Booking Failed';
+                    document.querySelector('.receipt-box p').textContent = 'Unable to retrieve booking details.';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.querySelector('.receipt-box h1').textContent = 'Error';
+                document.querySelector('.receipt-box p').textContent = 'Unable to load booking details.';
+            });
+    } else {
+        document.querySelector('.receipt-box h1').textContent = 'Invalid Booking';
+        document.querySelector('.receipt-box p').textContent = 'No booking ID found.';
+    }
+});
+
+</script>
+
+
+</body>
+</html>
