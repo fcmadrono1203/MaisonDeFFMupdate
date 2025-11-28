@@ -2,11 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const errorHandler = require('./utils/errorHandler');
+const errorHandler = require('./middleware/errorHandler');
 
 // Import routes
 const bookingRoutes = require('./routes/bookingRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const promoRoutes = require('./routes/promoRoutes');
+const authRoutes = require('./routes/authRoutes');
+const beauticianRoutes = require('./routes/beauticianRoutes');
 
 const app = express();
 
@@ -26,6 +29,9 @@ app.get('/', (req, res) => {
     endpoints: {
       bookings: '/api/bookings',
       services: '/api/services',
+      promos: '/api/promos',
+      auth: '/api/auth',
+      beauticians: '/api/beauticians',
     },
   });
 });
@@ -33,6 +39,9 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/promos', promoRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/beauticians', beauticianRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
