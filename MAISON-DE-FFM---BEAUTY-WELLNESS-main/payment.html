@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment | Maison De FFM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Main styles first -->
+    <link rel="stylesheet" href="booking.css">
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="assets/logo/FFM.png" alt="Maison De FFM Logo">
+            <div class="nav-title">
+                MAISON<br>
+                <span>DE FFM</span>
+            </div>
+        </div>
+        <div class="nav-center">
+            <a href="index.html">HOME</a>
+            <a href="about.html">ABOUT US</a>
+            <a href="services.html">SERVICES</a>
+            <a href="promos.html">PROMOS</a>
+            <a href="booking.html" class="active">BOOKING</a>
+            <a href="contact.html">CONTACT US</a>
+        </div>
+        <a href="booking.html" class="book-btn">BOOK NOW!</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="booking-hero payment-hero">
+        <h1>SECURE YOUR APPOINTMENT</h1>
+        <p>Complete payment to confirm your serenity</p>
+    </div>
+
+    <!-- Payment Container -->
+    <div class="payment-container">
+
+        <div class="payment-summary">
+            <h2 class="summary-title">YOUR BOOKING SUMMARY</h2>
+
+            <div class="summary-item">
+                <span id="service-name">Loading service...</span>
+                <span id="service-price">₱0</span>
+            </div>
+
+            <div id="addons-container"></div>
+
+            <div class="summary-item" id="home-service-row" style="display: none;">
+                <span>Home Service Fee</span>
+                <span>₱200</span>
+            </div>
+
+            <div class="summary-item summary-total">
+                <span>TOTAL</span>
+                <span id="total-amount">₱0</span>
+            </div>
+
+            <small style="color: #ffd6e8; letter-spacing: 2px; opacity: 0.8; display: block; margin-top: 15px;">
+                Payment secures your slot – full refund if canceled 24hrs prior
+            </small>
+        </div>
+
+        <!-- PAYMENT METHODS -->
+        <div class="payment-methods">
+            <label class="payment-method selected" onclick="selectMethod(this, 'gcash')">
+                <input type="radio" name="payment" value="gcash" checked>
+                <img src="assets/logo/gcashlogo.png" alt="GCash" class="payment-icon">
+                <span>GCash (Recommended)</span>
+            </label>
+
+            <label class="payment-method" onclick="selectMethod(this, 'maya')">
+                <input type="radio" name="payment" value="maya">
+                <img src="assets/logo/PayMaya_Logo.png" alt="Maya" class="payment-icon">
+                <span>Maya Wallet</span>
+            </label>
+
+            <label class="payment-method" onclick="selectMethod(this, 'card')">
+                <input type="radio" name="payment" value="card">
+                <img src="assets/logo/cardlogo.png" alt="Credit/Debit Card" class="payment-icon">
+                <span>Credit/Debit Card</span>
+            </label>
+        </div>
+
+
+        <!-- GCASH INFO PANEL -->
+<div id="gcash-info" class="payment-info active">
+    <div class="form-group">
+        <label>GCASH NUMBER</label>
+        <input type="text" placeholder="09XXXXXXXXX" maxlength="11">
+    </div>
+
+    <div class="form-group">
+        <label>GCASH ACCOUNT NAME</label>
+        <input type="text" placeholder="Full Name">
+    </div>
+
+    <div class="form-group">
+        <label>UPLOAD PAYMENT SCREENSHOT</label>
+        <input type="file" accept="image/*">
+    </div>
+</div>
+
+
+        <!-- MAYA INFO PANEL -->
+<div id="maya-info" class="payment-info">
+    <div class="form-group">
+        <label>MAYA NUMBER</label>
+        <input type="text" placeholder="09XXXXXXXXX" maxlength="11">
+    </div>
+
+    <div class="form-group">
+        <label>MAYA ACCOUNT NAME</label>
+        <input type="text" placeholder="Full Name">
+    </div>
+
+    <div class="form-group">
+        <label>UPLOAD PAYMENT SCREENSHOT</label>
+        <input type="file" accept="image/*">
+    </div>
+</div>
+
+
+        <!-- CREDIT/DEBIT CARD FORM -->
+        <div id="card-info" class="payment-info">
+            <div class="form-group">
+                <label>CARD NUMBER</label>
+                <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+            </div>
+
+            <div class="form-group" style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px;">
+                <div>
+                    <label>EXPIRY DATE</label>
+                    <input type="text" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div>
+                    <label>CVV</label>
+                    <input type="text" placeholder="123" maxlength="4">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>CARDHOLDER NAME</label>
+                <input type="text" placeholder="Full name on card">
+            </div>
+        </div>
+
+        <!-- CONFIRM PAYMENT BUTTON -->
+        <button class="confirm-btn" onclick="processPayment()">
+            CONFIRM & PAY <span id="pay-amount">₱0</span>
+        </button>
+
+    </div>
+
+<script>
+    /* --------------------------
+       LOAD BOOKING DETAILS
+    --------------------------- */
+    const params = new URLSearchParams(window.location.search);
+    const service = decodeURIComponent(params.get('service') || 'Swedish Massage (1 Hour)');
+    const price = parseInt(params.get('price')) || 400;
+    const homeService = params.get('home') === 'true';
+    const addons = params.get('addons') ? decodeURIComponent(params.get('addons')).split(',') : [];
+
+    const addonPrices = {
+        'Aromatherapy Oil': 150,
+        'Hot Stone': 200,
+        'Foot Spa': 180
+    };
+
+    let total = price;
+    if (homeService) total += 200;
+
+    document.getElementById('service-name').textContent = service;
+    document.getElementById('service-price').textContent = `₱${price}`;
+
+    const addonsContainer = document.getElementById('addons-container');
+    addons.forEach(addon => {
+        const name = addon.trim();
+        if (name && addonPrices[name]) {
+            total += addonPrices[name];
+            const item = document.createElement('div');
+            item.className = 'summary-item';
+            item.innerHTML = `<span>+ ${name}</span><span>₱${addonPrices[name]}</span>`;
+            addonsContainer.appendChild(item);
+        }
+    });
+
+    if (homeService) {
+        document.getElementById('home-service-row').style.display = 'flex';
+    }
+
+    document.getElementById('total-amount').textContent = `₱${total}`;
+    document.getElementById('pay-amount').textContent = `₱${total}`;
+
+
+    /* --------------------------
+       SWITCH PAYMENT METHOD
+    --------------------------- */
+    function selectMethod(label, method) {
+        // Remove highlight from all
+        document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
+        label.classList.add('selected');
+
+        // Hide all info sections
+        document.getElementById('gcash-info').classList.remove('active');
+        document.getElementById('maya-info').classList.remove('active');
+        document.getElementById('card-info').classList.remove('active');
+
+        // Show selected section
+        if (method === 'gcash') document.getElementById('gcash-info').classList.add('active');
+        if (method === 'maya') document.getElementById('maya-info').classList.add('active');
+        if (method === 'card') document.getElementById('card-info').classList.add('active');
+    }
+    // existing scripts...  
+
+    /* --------------------------
+       PROCESS PAYMENT + REDIRECT
+    --------------------------- */
+    function processPayment() {
+
+        // OPTIONAL: Save payment confirmation or booking summary to localStorage  
+        localStorage.setItem("bookingTotal", total);
+        localStorage.setItem("bookingService", service);
+
+        // REDIRECT TO SUMMARY PAGE
+        window.location.href = "booking_summary.html";
+    }
+
+</script>
+
+</body>
+</html>
