@@ -1,0 +1,273 @@
+/* =========================== GLOBAL & FONT =========================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    font-family: "Playfair Display", serif;
+    scroll-behavior: smooth;
+}
+
+body.login-body {
+    min-height: 100vh;
+    background: url("assets/background/welcome.png") center/cover no-repeat fixed;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================== MAIN CONTAINER =========================== */
+.login-container {
+    display: flex;
+    width: 92%;
+    max-width: 980px;
+    height: 76vh;
+    min-height: 520px;
+    background: transparent;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(51, 3, 3, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* =========================== LEFT SIDE - BRANDING =========================== */
+.login-left {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(255,220,90,0.2), rgba(240,139,182,0.2));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.login-logo {
+    height: 200px;          
+    width: auto;
+    filter: drop-shadow(0 0 28px rgba(255,220,90,1));
+    margin-bottom: 10px;
+    transition: transform 0.4s ease;
+}
+.login-logo:hover { transform: scale(1.06); }
+
+.login-left h1 {
+    font-size: 42px;
+    color: #ffdc5a;
+    letter-spacing: 7px;
+    text-shadow: 0 0 22px rgba(255,220,90,0.8);
+    margin-bottom: 8px;
+}
+
+.login-left p {
+    font-size: 17px;
+    letter-spacing: 4px;
+    opacity: 0.95;
+}
+
+/* =========================== RIGHT SIDE - FORM =========================== */
+.login-right {
+    flex: 1;
+    background: rgba(131, 58, 112, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.login-box h2 {
+    font-size: 30px;
+    color: #ffdc5a;
+    letter-spacing: 2px;
+    margin-bottom: 1px;
+}
+
+.subtitle {
+    font-size: 11.5px;
+    opacity: 0.85;
+    margin-bottom: 14px;
+}
+
+/* =========================== INPUTS =========================== */
+.login-box input {
+    width: 100%;
+    padding: 9px 15px;
+    margin-bottom: 9px;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-family: "Playfair Display", serif;
+    font-size: 13px;
+    outline: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+.login-box input:focus {
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 0 15px rgba(255,220,90,0.4);
+}
+.login-box input::placeholder {
+    color: rgba(255,255,255,0.6);
+    font-size: 12.5px;
+}
+
+/* =========================== LUXURY GENDER DROPDOWN =========================== */
+.select-wrapper {
+    position: relative;
+    margin: 9px 0;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 9px 48px 9px 15px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,220,90,0.25);
+    border-radius: 50px;
+    color: white;
+    font-family: "Playfair Display", serif;
+    font-size: 13px;
+    outline: none;
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: all 0.4s ease;
+}
+.select-wrapper select:focus {
+    background: rgba(255,255,255,0.25);
+    border-color: #ffdc5a;
+    box-shadow: 0 0 18px rgba(255,220,90,0.5);
+}
+
+/* Floating "Gender" Label */
+.select-wrapper::before {
+    position: absolute;
+    top: -8px;
+    left: 18px;
+    background: rgba(131,58,112,0.95);
+    padding: 0 8px;
+    font-size: 10.5px;
+    color: #ffdc5a;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+}
+
+/* Animated Golden Arrow */
+.select-wrapper::after {
+    content: "select";
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    color: #ffdc5a;
+    font-size: 13px;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(255,220,90,0.9);
+}
+@keyframes pulse {
+    0%, 100% { opacity: 0.75; transform: translateY(-50%) scale(1); }
+    50% { opacity: 1; transform: translateY(-50%) scale(1.15); }
+}
+
+/* Dropdown Options */
+.select-wrapper select option {
+    background: #4a0038;
+    color: white;
+    padding: 12px;
+}
+.select-wrapper select option:hover {
+    background: #ffdc5a !important;
+    color: #4a0038 !important;
+    font-weight: bold;
+}
+
+/* =========================== BUTTON & LINK =========================== */
+.login-submit {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    background: linear-gradient(135deg, #ffdc5a, #f5c147);
+    border: none;
+    border-radius: 50px;
+    color: #4a0038;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(255,220,90,0.4);
+    transition: all 0.4s ease;
+}
+.login-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255,220,90,0.6);
+}
+
+.signup {
+    margin-top: 12px;
+    font-size: 12px;
+}
+.signup a {
+    color: #ffdc5a;
+    font-weight: bold;
+    text-decoration: none;
+}
+.signup a:hover { text-decoration: underline; }
+
+/* =========================== RESPONSIVE =========================== */
+@media (max-width: 900px) {
+    .login-container {
+        flex-direction: column;
+        height: auto;
+        max-width: 480px;
+        margin: 20px;
+    }
+    .login-left, .login-right { padding: 40px 25px; }
+    .login-logo { height: 110px; }
+    .login-left h1 { font-size: 38px; }
+}
+
+@media (max-width: 480px) {
+    .login-logo { height: 95px; }
+    .login-left h1 { font-size: 32px; }
+    .login-box h2 { font-size: 22px; }
+}
+
+/* =========================== BIRTHDAY FIELD =========================== */
+.birthday-wrapper {
+    position: relative;
+    margin: 9px 0;
+}
+
+.birthday-wrapper input[type="date"] {
+    width: 100%;
+    padding: 9px 15px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,220,90,0.25);
+    border-radius: 50px;
+    color: white;
+    font-family: "Playfair Display", serif;
+    font-size: 13px;
+    outline: none;
+    backdrop-filter: blur(12px);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.birthday-wrapper input[type="date"]:focus {
+    background: rgba(255,255,255,0.25);
+    border-color: #ffdc5a;
+    box-shadow: 0 0 18px rgba(255,220,90,0.5);
+}
+
+

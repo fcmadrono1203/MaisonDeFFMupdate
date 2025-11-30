@@ -1,0 +1,71 @@
+<!-- Basic Beautician Tracker (Option A - Ultra Simple)
+     This matches your existing Welcome Page style. Insert into home.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautician Tracker | Maison De FFM</title>
+    <link rel="stylesheet" href="beautician.css">
+    
+</head>
+<body>
+
+<div class="tracker-container">
+    <h2>Track Your Beautician</h2>
+    <p id="tracker-status">Click the button to start tracking.</p>
+    <button id="startTracking">Start Tracking</button>
+
+    <!-- Simple embedded Google Map that updates dynamically -->
+    <iframe id="map" src="" loading="lazy"></iframe>
+</div>
+
+<script>
+// --- OPTION A: Ultra Simple Tracker ---
+
+let mapFrame = document.getElementById("map");
+let statusText = document.getElementById("tracker-status");
+let button = document.getElementById("startTracking");
+
+// Starting simulated beautician coordinates (Manila example)
+let beauticianLat = 14.5995;
+let beauticianLng = 120.9842;
+
+let destinationLat = 14.5547;   // Example: BGC
+let destinationLng = 121.0244;
+
+let trackingInterval;
+
+button.addEventListener("click", () => {
+    mapFrame.style.display = "block";
+
+    statusText.textContent = "Beautician is on the way...";
+
+    // Start interval simulation
+    trackingInterval = setInterval(() => {
+        // Move beautician slightly closer to destination each cycle
+        beauticianLat += (destinationLat - beauticianLat) * 0.02;
+        beauticianLng += (destinationLng - beauticianLng) * 0.02;
+
+        // Update map
+        const mapURL = `https://www.google.com/maps?q=${beauticianLat},${beauticianLng}&z=15&output=embed`;
+        mapFrame.src = mapURL;
+
+        // Distance check (simple approximation)
+        const distance = Math.sqrt(
+            Math.pow(destinationLat - beauticianLat, 2) +
+            Math.pow(destinationLng - beauticianLng, 2)
+        );
+
+        if (distance < 0.0005) {
+            statusText.textContent = "Beautician has arrived!";
+            clearInterval(trackingInterval);
+        }
+
+    }, 2000); // updates every 2 seconds
+});
+</script>
+
+</body>
+</html>

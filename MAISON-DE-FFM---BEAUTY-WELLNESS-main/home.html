@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="home.css">
+    <title>Maison De FFM - Home</title>
+</head>
+
+<body style="background-image: url('assets/background/all.png');">
+
+<div class="navbar">
+    <div class="nav-left">
+        <img src="assets/logo/FFM.png" alt="Maison De FFM Logo">
+        <h2 class="nav-title">MAISON DE FFM</h2>
+    </div>
+
+    <div class="nav-center">
+        <a href="home.html">HOME</a>
+        <a href="about.html">ABOUT US</a>
+        <a href="services.html">SERVICES</a>
+        <a href="promos.html">PROMOS</a>
+        <a href="contact.html">CONTACT US</a>
+    </div>
+
+    <a href="booking.html" class="book-btn">BOOK NOW!</a>
+    <a href="login.html" class="logout-btn">LOG OUT</a>
+</div>
+
+
+ <a href="booking.html" class="book-btn">BOOK NOW!</a>
+</div>
+
+<!-- Main Content -->
+<div class="page-header">
+    <h1 class="page-title">MAISON DE FFM</h1>
+    <p class="page-subtext">
+        PREMIUM BEAUTY & WELLNESS • MONDAY – SUNDAY • CONVENIENT & RELAX
+    </p>
+</div>
+
+<!-- FAQ Section -->
+<div class="faq-section">
+    <h2>FAQs</h2>
+    <p class="faq-description">
+        We may already have the answers to some of your concerns. Below to see the complete low-down of some of the most frequently asked questions we have received.</p>
+    <div class="faq-buttons" style="margin-top: 15px;">
+        <button class="faq-btn" data-faq="policy">POLICY</button>
+        <button class="faq-btn" data-faq="booking">BOOKING AN APPOINTMENT</button>
+        <button class="faq-btn" data-faq="customer">CUSTOMER SERVICE</button>
+        <button class="faq-btn" data-faq="cancellation">CANCELLATION</button>
+        <button class="faq-btn" data-faq="payment">PAYMENT</button>
+    </div>
+</div>
+
+<!-- Floating FAQ Modal -->
+<div id="faq-modal" class="faq-modal">
+    <div class="faq-modal-content">
+        <span class="faq-close">&times;</span>
+        <h3 id="faq-title"></h3>
+        <p id="faq-text"></p>
+    </div>
+</div>
+
+<!-- Reviews Section -->
+<div class="reviews-section">
+    <h2>REVIEWS</h2>
+    <div class="review-item">
+        <p>"Super galing and ang babait po ng staff. Super worth it yung services!" <strong>- H.</strong></p>
+    </div>
+    <div class="review-item">
+        <p>"The threading is excellent! Service is fantastic. They are so nice and they make my eyebrows look amazing!" <strong>- C.</strong></p>
+    </div>
+    <div class="review-item">
+        <p>"Such a quick and professional service, esp. Reece. Well-accommodating, love the staff 💖" <strong>- M.</strong></p>
+    </div>
+</div>
+
+<script>
+const faqButtons = document.querySelectorAll(".faq-btn");
+const modal = document.getElementById("faq-modal");
+const modalTitle = document.getElementById("faq-title");
+const modalText = document.getElementById("faq-text");
+const closeBtn = document.querySelector(".faq-close");
+
+// FAQ Content (Formatted with HTML)
+const faqData = {
+    policy: {
+        title: "POLICY",
+        text: `
+            <p><strong>How many minutes is your grace period?</strong></p>
+            <p>As much as we want to accommodate all your requests, we cannot allow late arrivals. If you are running late, call or message us immediately so we can advise you of your options.</p>
+            <p>If you booked using the app, you may re-schedule there. We also send reminders!</p>
+        `
+    },
+
+    booking: {
+        title: "BOOKING AN APPOINTMENT",
+        text: `
+            <p><strong>How do I book an appointment through the website?</strong></p>
+            <p>It's easy! Just click the <strong>"BOOK NOW!"</strong> button above.</p>
+
+            <ol>
+                <li>Home-Service or On-site.</li>
+                <li>Choose your date.</li>
+                <li>Select technician (optional).</li>
+                <li>Choose your services — prices appear automatically.</li>
+                <li>Select your preferred time.</li>
+                <li>Click “Add Service” if you want additional services.</li>
+            </ol>
+
+            <p><strong>I was not able to book in advance, can I still get a service?</strong></p>
+            <p>Yes! Walk-ins are accepted, but we recommend booking to avoid waiting.</p>
+
+            <p><strong>I booked an appointment but something came up. What now?</strong></p>
+            <p>You may reschedule or visit any Maison De FFM branch.</p>
+        `
+    },
+
+    customer: {
+        title: "CUSTOMER SERVICE",
+        text: `
+            <p><strong>What are your customer service hours?</strong></p>
+            <p>Monday to Friday, 9 AM – 6 PM.</p>
+
+            <p><strong>How do I contact you?</strong></p>
+            <p>You may email us at <strong>customercare@ffm.com</strong>.</p>
+        `
+    },
+
+    cancellation: {
+        title: "CANCELLATION",
+        text: `
+            <p><strong>How long is my appointment considered valid?</strong></p>
+            <p>All bookings are valid unless cancelled within the allowed timeframe.
+            Accounts may be disabled for excessive cancellations or no-shows.</p>
+        `
+    },
+
+    payment: {
+        title: "PAYMENT",
+        text: `
+            <p><strong>Are online payments available?</strong></p>
+            <p>Yes, we accept online payments.</p>
+
+            <p><strong>What other payment methods do you accept?</strong></p>
+            <p>Cash, E-wallet, and Card.</p>
+        `
+    }
+};
+
+// Open modal
+faqButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-faq");
+        modalTitle.textContent = faqData[key].title;
+        modalText.innerHTML = faqData[key].text;  // ← IMPORTANT
+        modal.style.display = "block";
+    });
+});
+
+// Close modal
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// Close when clicking outside modal
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+</script>
+
+
+
+</body>
+</html>
