@@ -3,122 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services • Maison De FFM</title>
-    <link rel="stylesheet" href="services.css">
+    <title>Thank You | Maison De FFM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="booking.css">
+    <style>
+        body { 
+            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), 
+                        url('assets/background/welcome.png') center/cover no-repeat fixed; 
+            color: white; 
+            min-height: 100vh; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .thankyou-container { 
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .thankyou-content {
+            max-width: 900px;
+            text-align: center;
+        }
+        .thankyou-content h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 58px; 
+            margin-bottom: 20px; 
+            color: #ffdc5a; 
+            text-shadow: 0 0 30px rgba(255,220,90,0.8); 
+        }
+        .thankyou-content p { 
+            font-size: 22px; 
+            line-height: 1.8; 
+            margin: 20px 0; 
+            opacity: 0.95; 
+        }
+        .highlight { color: #ffdc5a; font-weight: bold; }
+
+        .logout-btn {
+            margin-left: 15px;
+            padding: 12px 28px;
+            background: transparent;
+            color: #ffdc5a;
+            border: 2px solid #ffdc5a;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+        .logout-btn:hover {
+            background: #ffdc5a;
+            color: #000;
+        }
+
+        .confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+    </style>
 </head>
 <body>
 
     <!-- NAVIGATION BAR -->
-    <div class="navbar">
+    <nav class="navbar">
         <div class="nav-left">
             <img src="assets/logo/FFM.png" alt="Maison De FFM Logo">
-            <h2 class="nav-title">MAISON DE FFM</h2>
+            <div class="nav-title">MAISON DE FFM</div>
         </div>
         <div class="nav-center">
             <a href="home.html">HOME</a>
             <a href="about.html">ABOUT US</a>
-            <a href="services.html" class="active">SERVICES</a>
+            <a href="services.html">SERVICES</a>
             <a href="promos.html">PROMOS</a>
             <a href="contact.html">CONTACT US</a>
         </div>
-        <a href="booking.html" class="book-btn">BOOK NOW!</a>
-        <a href="login.html" class="logout-btn">LOG OUT</a>
+        <div style="display:flex; align-items:center;">
+            <a href="booking.html" class="book-btn">BOOK NOW!</a>
+            <button class="logout-btn" onclick="logout()">LOG OUT</button>
+        </div>
+    </nav>
 
+    <!-- GOLD CONFETTI -->
+    <div class="confetti" id="confetti"></div>
+
+    <!-- CENTERED CONTENT TEXT -->
+    <div class="thankyou-container">
+        <div class="thankyou-content">
+            <h1>Thank You!</h1>
+            <p>Your appointment has been <span class="highlight">successfully booked</span> with Maison De FFM.</p>
+            <p>We’ve sent all the details to your phone & email.<br>
+            Your beautician will arrive on <span class="highlight" id="booking-date"></span> at <span class="highlight" id="booking-time"></span>.</p>
+            <p>Relax, glow, and get ready to feel like royalty — because you deserve nothing less.</p>
+
+            <p style="margin-top: 50px; font-size: 18px; opacity: 0.9;">
+                See you soon!
+            </p>
+        </div>
     </div>
 
-    <!-- SERVICES HERO TITLE -->
-    <div class="services-header">
-        <h1 class="services-title">SERVICES</h1>
-    </div>
+    <!-- CONFETTI BRO -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // Confetti
+        const confettiSettings = { 
+            particleCount: 150, spread: 70, origin: { y: 0.6 },
+            colors: ['#ffdc5a', '#ffd700', '#f0e68c', '#fff', '#ff69b4']
+        };
+        const burst = setInterval(() => {
+            confetti(Object.assign({}, confettiSettings, { origin: { x: Math.random(), y: Math.random() * 0.4 } }));
+        }, 700);
+        setTimeout(() => clearInterval(burst), 8000);
+        setTimeout(() => confetti({ particleCount: 300, spread: 120, origin: { y: 0.5 } }), 4000);
 
-    <!-- ALL SERVICES - VERTICAL SCROLL -->
-    <div class="services-container">
+        // Show booking details
+        document.addEventListener("DOMContentLoaded", () => {
+            const data = JSON.parse(localStorage.getItem("bookingData") || "{}");
+            if (data.date) document.getElementById("booking-date").textContent = new Date(data.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            if (data.time) document.getElementById("booking-time").textContent = data.time;
+        });
 
-        <!-- MASSAGE -->
-        <div class="service-category">
-            <h2 class="category-title glow">Massage</h2>
-            <div class="service-grid">
-                <div class="service-item">
-                    <h3>1 HOUR</h3>
-                    <ul>
-                        <li>Ventosa massage <span>500.00</span></li>
-                        <li>Swedish massage <span>400.00</span></li>
-                        <li>Traditional Hilot <span>400.00</span></li>
-                        <li>Half Body <span>300.00</span></li>
-                        <li>Foot massage <span>250.00</span></li>
-                    </ul>
-                </div>
-                <div class="service-item">
-                    <h3>30 MINUTES</h3>
-                    <ul>
-                        <li>Back massage <span>250.00</span></li>
-                        <li>Facial massage <span>250.00</span></li>
-                    </ul>
-                    <p class="home-fee">Home-Service Fee <span>200.00</span></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- NAILS -->
-        <div class="service-category">
-            <h2 class="category-title glow">Nails</h2>
-            <div class="service-grid">
-                <div class="service-item">
-                    <h3>Manicure</h3>
-                    <ul>
-                        <li>Regular <span>1,500.00</span></li>
-                        <li>With Nail Extensions <span>3,500.00</span></li>
-                        <li>18 below <span>1,000.00</span></li>
-                    </ul>
-                </div>
-                <div class="service-item">
-                    <h3>Pedicure</h3>
-                    <ul>
-                        <li>Regular <span>1,500.00</span></li>
-                        <li>18 Below <span>1,000.00</span></li>
-                    </ul>
-                    <p class="home-fee">Home Service Fee <span>200.00</span></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- WAXING -->
-        <div class="service-category">
-            <h2 class="category-title glow">Waxing</h2>
-            <div class="service-grid">
-                <div class="service-item full">
-                    <ul>
-                        <li>Eyebrows and Mouth <span>2,000.00</span></li>
-                        <li>Arms <span>2,500.00</span></li>
-                        <li>Legs <span>3,500.00</span></li>
-                        <li>Full Face <span>2,613.00</span></li>
-                        <li>Full Body With Massage <span>8,000.00</span></li>
-                    </ul>
-                    <p class="home-fee">Home Service Fee <span>200.00</span></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- THREADING -->
-        <div class="service-category">
-            <h2 class="category-title glow">Threading</h2>
-            <div class="service-grid">
-                <div class="service-item full">
-                    <ul>
-                        <li>Eyebrows <span>3,000.00</span></li>
-                        <li>Chin <span>1,500.00</span></li>
-                        <li>Neck <span>2,000.00</span></li>
-                        <li>Upper Lip <span>1,500.00</span></li>
-                        <li>Side Burns <span>2,000.00</span></li>
-                        <li>Fore Head <span>2,678.00</span></li>
-                        <li>Full Face <span>6,000.00</span></li>
-                    </ul>
-                    <p class="home-fee">Home Service Fee <span>200.00</span></p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
+        // LOGOUT FUNCTION
+        function logout() {
+            localStorage.clear();
+            alert("You have been logged out successfully.");
+            window.location.href = "index.html";
+        }
+    </script>
 </body>
-</html>v
+</html>
